@@ -12,6 +12,7 @@ export default function Header() {
   const getNavItems = () => {
     return siteConfig.navItems.map((item) => {
       const isActive = pathname === item.href;
+      
       return (
         <NavbarItem key={item.href}>
           <Link
