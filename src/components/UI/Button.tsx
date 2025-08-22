@@ -4,10 +4,11 @@ import spinner from '@/assets/spinner.svg'
 
 interface ButtonCompProps {
     children: string | React.ReactNode,
-    onPress: (e: PressEvent) => void, 
+    onPress: (e: PressEvent) => void,
     color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'success',
     disabled?: boolean,
     loading?: boolean,
+    className?: string,
     size?: 'sm' | 'md' | 'lg',
     variant?: 'solid' | 'bordered' | 'ghost' | 'shadow' | 'light',
     startContent?: React.ReactNode,
@@ -24,6 +25,7 @@ const ButtonComp = ({
     size,
     variant,
     loading,
+    className,
     startContent,
     endContent,
     icon,
@@ -43,6 +45,7 @@ const ButtonComp = ({
             endContent={endContent}
             isIconOnly={icon}
             aria-label={aria_label}
+            className={className}
         >
             {children}
         </Button>
