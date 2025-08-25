@@ -1,11 +1,15 @@
+'use client';
+
+import React, { useState } from "react";
 import { EyeFilledIcon } from "@/assets/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "@/assets/EyeSlashFilleIcon";
 import { Input } from "@heroui/react"
-import React, { useState } from "react";
+
 
 interface InputCompProps {
     label?: string,
     type?: string,
+    name: string,
     className?: string,
     aria_label?: string,
     placeholder?: string,
@@ -26,6 +30,7 @@ interface InputCompProps {
 const InputComp = ({
     label,
     type,
+    name,
     placeholder,
     defaultValue,
     required,
@@ -54,6 +59,7 @@ const InputComp = ({
                 ?
                 <Input
                     onValueChange={setInputValue}
+                    name={name}
                     value={inputValue}
                     label={label}
                     aria-label={aria_label}
@@ -89,6 +95,7 @@ const InputComp = ({
                 <Input
                     onValueChange={setInputValue}
                     value={inputValue}
+                    name={name}
                     label={label}
                     aria-label={aria_label}
                     className={className}

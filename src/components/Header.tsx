@@ -2,8 +2,8 @@
 
 import { layoutConfig } from "@/config/layout.config";
 import { siteConfig } from "@/config/site.config";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
-import Link from "next/link";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
+import Link from '@/components/UI/Link';
 import { usePathname } from "next/navigation";
 
 export default function Header() {
@@ -16,13 +16,10 @@ export default function Header() {
       return (
         <NavbarItem key={item.href}>
           <Link
-            color="foreground"
+            color={isActive ? 'success' : 'foreground'}
             href={item.href}
-            className={`px-3 py-1 border-white rounded-full border-1.5 text-md
-              ${isActive ? "text-purple-700" : "text-foreground"}
-              hover:text-purple-700 hover:border-1.5
-              hover:border-purple-700 hover:rounded-full
-              ransition-color transition-border duration-200`}>
+            size='lg'
+            >
             {item.label}
           </Link>
         </NavbarItem>
@@ -31,10 +28,10 @@ export default function Header() {
   }
 
   return (
-    <Navbar style={{height: layoutConfig.headerHeight}}>
+    <Navbar isBordered isBlurred style={{height: layoutConfig.headerHeight}}>
       <NavbarBrand>
-        <Link className="font-bold text-black text-2xl" href='/'>{siteConfig.title}
-        </Link>
+        <p color='secondary'>{siteConfig.title}
+        </p>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -43,12 +40,12 @@ export default function Header() {
       
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="/profile/registration">Регистрация</Link>
+          <Link href="/profile/registration" block>Регистрация</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="secondary" href="/profile/signIn" variant="shadow">
+          <Link  href="/profile/signIn" block>
             Войти
-          </Button>
+          </Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar>

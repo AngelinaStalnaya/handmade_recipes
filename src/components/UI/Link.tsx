@@ -1,3 +1,5 @@
+'use client';
+
 import { Link, PressEvent } from "@heroui/react"
 
 interface LinkCompProps {
@@ -9,6 +11,7 @@ interface LinkCompProps {
     external?: boolean,
     block?: boolean,
     onPress: (e: PressEvent) => void,
+    className?: string,
 }
 
 const LinkComp = ({
@@ -20,11 +23,13 @@ const LinkComp = ({
     size,
     color,
     onPress,
+    className
 
 }: LinkCompProps) => {
     return (
         <Link
             onPress={onPress}
+            className={className}
             href={href ? href : '#'}
             isDisabled={disabled}
             isExternal={external}

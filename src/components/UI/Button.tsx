@@ -1,20 +1,23 @@
+'use client';
+
 import { Button, PressEvent } from "@heroui/react";
-import spinner from '@/assets/spinner.svg'
+import { SpinnerIcon } from '@/assets/SpinnerIcon'
 
 
 interface ButtonCompProps {
     children: string | React.ReactNode,
-    onPress: (e: PressEvent) => void,
+    onPress?: (e: PressEvent) => void,
     color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'success',
     disabled?: boolean,
     loading?: boolean,
     className?: string,
     size?: 'sm' | 'md' | 'lg',
-    variant?: 'solid' | 'bordered' | 'ghost' | 'shadow' | 'light',
+    variant?: 'solid' | 'bordered' | 'ghost' | 'shadow' | 'light' ,
     startContent?: React.ReactNode,
     endContent?: React.ReactNode,
     aria_label?: string,
     icon?: boolean,
+    type?: 'button' | 'submit'| 'reset',
 }
 
 const ButtonComp = ({
@@ -29,18 +32,20 @@ const ButtonComp = ({
     startContent,
     endContent,
     icon,
+    type,
     aria_label,
 }: ButtonCompProps) => {
     return (
         <Button
             onPress={onPress}
             radius='full'
+            type={type}
             color={color ? color : 'secondary'}
             size={size ? size : 'md'}
             variant={variant ? variant : 'ghost'}
             isDisabled={disabled}
             isLoading={loading}
-            spinner={spinner}
+            spinner={<SpinnerIcon />}
             startContent={startContent}
             endContent={endContent}
             isIconOnly={icon}
