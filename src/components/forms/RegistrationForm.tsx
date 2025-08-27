@@ -1,50 +1,157 @@
 'use client';
 
-import { Form } from "@heroui/react";
-import { FormEvent } from "react";
-import Input from "../UI/Input";
-import Button from "../UI/Button";
+import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { regSchema, RegSchemaType } from "@/validation/registration.schema";
+import { Button, Form, Input } from "@heroui/react";
 
 export default function RegistrationFormComp() {
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    formState: { isSubmitting }
+  } = useForm({
+    resolver: zodResolver(regSchema),
+    defaultValues: {
+      'username': 'uij',
+      'password': '12345678',
+      'confirmPassword': '12345678',
+      'email': 'abc@abc.com'
+    }
+  })
+
+  const methods = useForm()
+
+  const zeroState = {
+    'username': '',
+    'password': '',
+    'confirmPassword': '',
+    'email': ''
+  }
+
+  const onSubmit: SubmitHandler<RegSchemaType> = async (data, event) => {
+    event?.preventDefault();
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const newData = JSON.stringify(data)
+      console.log(`submit ${newData}, typeof ${typeof data}`);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
-    <Form
-      className="w-full max-w-xs flex flex-col gap-4"
-      onReset={() => console.log("reset")}
-      onSubmit={(e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(e.currentTarget));
+    <FormProvider {...methods}>
+      <Form method='post'
+        className="w-full max-w-xs flex flex-col gap-4"
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={() => reset(zeroState)}
+      >
+        <Controller
+          {...register('username')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              isRequired
+              id='username'
+              label="Username"
+              labelPlacement="outside"
+              placeholder="Enter your username"
+              type="text"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
 
-        console.log(`submit ${JSON.stringify(data)}`);
-      }}
-    >
-      <Input
-        required
-        errorMessage="Please enter a valid username"
-        label="Username"
-        labelPlacement="outside"
-        name="username"
-        placeholder="Enter your username"
-        type="text"
-      />
+            />
+          )}
+        />
+        <Controller
+          {...register('email')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              isRequired
+              id='email'
+              label="Email"
+              labelPlacement="outside"
+              placeholder="Enter your email"
+              type="text"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
+            />
+          )}
+        />
 
-      <Input
-        required
-        errorMessage="Please enter a valid email"
-        label="Email"
-        labelPlacement="outside"
-        name="email"
-        placeholder="Enter your email"
-        type="email"
-      />
-      <div className="flex gap-2">
-        <Button variant="solid" type="submit">
-          Submit
-        </Button>
-        <Button type="reset" variant="bordered">
-          Reset
-        </Button>
-      </div>
-    </Form>
+        <Controller
+          {...register('password')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              isRequired
+              id='password'
+              label="Password"
+              labelPlacement="outside"
+              placeholder="Enter your password"
+              type="password"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
+            />
+          )}
+        />
+        <Controller
+          {...register('confirmPassword')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              isRequired
+              id='confirmPassword'
+              label="Repeat password"
+              labelPlacement="outside"
+              placeholder="Enter your password"
+              type="password"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
+            />
+          )}
+        />
+
+
+        <div className="flex gap-2">
+          <Button variant="solid" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+            {isSubmitting ? "Loading..." : "Submit"}
+          </Button>
+          <Button type="reset" variant="bordered">
+            Reset
+          </Button>
+        </div>
+      </Form>
+    </FormProvider>
   );
 }
