@@ -16,8 +16,8 @@ export default function RegistrationFormComp() {
     resolver: zodResolver(regSchema),
     defaultValues: {
       'username': 'uij',
-      'password': '12345678',
-      'confirmPassword': '12345678',
+      'password': '12345678A~',
+      'confirmPassword': '12345678A~',
       'email': 'abc@abc.com'
     }
   })

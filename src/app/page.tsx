@@ -1,6 +1,8 @@
 'use client';
+
+import LogInFormComp from "@/components/forms/LogInForm";
 import RegistrationFormComp from "@/components/forms/RegistrationForm";
-import SignInFormComp from "@/components/forms/SignInForm";
+import ModalComp from "@/components/UI/Modal";
 
 
 export default function Home() {
@@ -8,8 +10,9 @@ export default function Home() {
     <section className='flex flex-col gap-3 '>
       Home page
       <div className='flex gap-3'>
-      <RegistrationFormComp />
-      <SignInFormComp />
+
+        <ModalComp modalBtnText="Register" modalHeader="Sign In" btnVariant='bordered'>{<RegistrationFormComp />}</ModalComp>
+        <ModalComp modalBtnText="Log in" modalHeader="Log In" btnVariant='solid'>{<LogInFormComp />}</ModalComp>
       </div>
     </section>
   )

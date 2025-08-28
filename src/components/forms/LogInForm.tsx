@@ -3,9 +3,9 @@
 import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Form, Input } from "@heroui/react";
-import { signInSchema, SignInSchemaType } from "@/validation/signin.schema";
+import { logInSchema, LogInSchemaType } from "@/validation/login.schema";
 
-export default function SignInFormComp() {
+export default function LogInFormComp() {
     const {
         handleSubmit,
         control,
@@ -13,7 +13,7 @@ export default function SignInFormComp() {
         reset,
         formState: { isSubmitting }
     } = useForm({
-        resolver: zodResolver(signInSchema),
+        resolver: zodResolver(logInSchema),
         defaultValues: {
             'password': 'Z~12345678',
             'email': 'abc@abc.com'
@@ -27,7 +27,7 @@ export default function SignInFormComp() {
         'email': ''
     }
 
-    const onSubmit: SubmitHandler<SignInSchemaType> = async (data, event) => {
+    const onSubmit: SubmitHandler<LogInSchemaType> = async (data, event) => {
         event?.preventDefault();
 
         try {
@@ -47,7 +47,7 @@ export default function SignInFormComp() {
                 onSubmit={handleSubmit(onSubmit)}
                 onReset={() => reset(zeroState)}
             >
-
+                {/* TODO: refactor duplicate Controller component */}
                 <Controller
                     {...register('email')}
                     control={control}
