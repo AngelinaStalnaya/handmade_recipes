@@ -8,9 +8,13 @@ import { usePathname } from "next/navigation";
 import ModalComp from "./UI/Modal";
 import RegistrationFormComp from "./forms/RegistrationForm";
 import LogInFormComp from "./forms/LogInForm";
+import UserComp from "./UI/User";
+import ButtonComp from "./UI/Button";
+import { useState, useEffect } from "react";
 
 export default function Header() {
   const pathname = usePathname();
+  const [logged, setLogged] = useState<boolean>(true);
 
   const getNavItems = () => {
     return siteConfig.navItems.map((item) => {
@@ -30,6 +34,8 @@ export default function Header() {
     })
   }
 
+  useEffect(() => { }, [logged])
+
   return (
     <Navbar isBordered isBlurred style={{ height: layoutConfig.headerHeight }}>
       <NavbarBrand>
@@ -42,24 +48,50 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <ModalComp
-            modalBtnText="Register"
-            modalHeader="Sign In"
-            btnVariant='bordered'>
-            {<RegistrationFormComp />}
-          </ModalComp>
-        </NavbarItem>
-        <NavbarItem>
-          <ModalComp
-            modalBtnText="Log in"
-            modalHeader="Log In"
-            btnVariant='solid'>
-            {<LogInFormComp />}
-          </ModalComp>
-        </NavbarItem>
+        {logged
+          ?
+          <>
+            <NavbarItem>
+              <ButtonComp
+                variant="bordered"
+                color='secondary'
+                onPress={() => {setLogged(false); console.log('log out clicked')}}
+              >
+                Log out
+              </ButtonComp>
+            </NavbarItem>
+            <NavbarItem>
+              <ButtonComp variant="light" className='p-0 m-0 pr-2' onPress={() => console.log('profile clicked')}>
+                <UserComp name='Angelina' description='Handmade master dhft' male='female' />
+              </ButtonComp>
+            </NavbarItem>
+          </>
+          :
+        <>
+            <NavbarItem className="hidden lg:flex">
+              <ModalComp
+                modalBtnText="Register"
+                modalHeader="Sign In"
+                btnVariant='bordered'>
+                {<RegistrationFormComp />}
+              </ModalComp>
+            </NavbarItem>
+
+            <NavbarItem>
+              <ModalComp
+                modalBtnText="Log in"
+                modalHeader="Log In"
+                btnVariant='solid'>
+                {<LogInFormComp />}
+              </ModalComp>
+            </NavbarItem>
+          </>
+        }
+
+
+
       </NavbarContent>
-    </Navbar>
+    </Navbar >
   );
 }
 

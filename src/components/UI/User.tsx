@@ -3,12 +3,13 @@
 import { Avatar, AvatarIcon, User } from "@heroui/react";
 
 type UserCompProps = {
-    avatarSrc?: string,
     description: string,
-    name: string
+    name: string,
+    male: 'male' | 'female',
+    avatarSrc?: string, 
 }
 
-export default function UserComp({ avatarSrc, description, name }: UserCompProps) {
+export default function UserComp({ description, name,avatarSrc, male }: UserCompProps) {
     return (
         <User
             avatarProps={{
@@ -18,7 +19,7 @@ export default function UserComp({ avatarSrc, description, name }: UserCompProps
                 showFallback: true,
                 fallback: <Avatar
                     classNames={{
-                        base: 'bg-secondary',
+                        base: `${male === 'female' ? 'bg-secondary' : 'bg-green-700'}`,
                         icon: "text-white/80",
                     }}
                     icon={<AvatarIcon />}

@@ -10,7 +10,7 @@ interface LinkCompProps {
     color?: 'foreground' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success',
     external?: boolean,
     block?: boolean,
-    onPress: (e: PressEvent) => void,
+    onPress?: (e: PressEvent) => void,
     className?: string,
 }
 
