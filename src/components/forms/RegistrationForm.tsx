@@ -143,6 +143,7 @@ export default function RegistrationFormComp() {
             />
           )}
         />
+        
 
 
         <div className="flex gap-2">
