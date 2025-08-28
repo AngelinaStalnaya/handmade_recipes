@@ -51,6 +51,7 @@ export default function RegistrationFormComp() {
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => reset(zeroState)}
       >
+        {/* TODO: refactor duplication of Controller */}
         <Controller
           {...register('username')}
           control={control}
@@ -144,10 +145,21 @@ export default function RegistrationFormComp() {
 
 
         <div className="flex gap-2">
-          <Button variant="solid" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            isLoading={isSubmitting}
+            color='secondary'
+            radius='full'
+            variant='solid'  >
             {isSubmitting ? "Loading..." : "Submit"}
           </Button>
-          <Button type="reset" variant="bordered">
+          <Button
+            type="reset"
+            variant="bordered"
+            color='secondary'
+            radius='full'
+          >
             Reset
           </Button>
         </div>
