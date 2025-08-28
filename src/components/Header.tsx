@@ -62,7 +62,7 @@ export default function Header() {
             </NavbarItem>
             <NavbarItem>
               <ButtonComp variant="light" className='flex p-0 m-0 pr-2' onPress={() => console.log('profile clicked')}>
-                <UserComp name='Angelina' description='Handmade master' male='female' />
+                <UserComp name='Angelina' description='Handmade master' gender='female' />
               </ButtonComp>
             </NavbarItem>
           </>

@@ -18,6 +18,7 @@ export const regSchema = z
     confirmPassword: z
       .string("Password is required")
       .min(8, "Password must be at least 8 characters long"),
+    gender: z.string('You have to select a gender'),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {

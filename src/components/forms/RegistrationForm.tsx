@@ -3,7 +3,7 @@
 import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { regSchema, RegSchemaType } from "@/validation/registration.schema";
-import { Button, Form, Input } from "@heroui/react";
+import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 
 export default function RegistrationFormComp() {
   const {
@@ -143,7 +143,32 @@ export default function RegistrationFormComp() {
             />
           )}
         />
-        
+        <Controller
+          {...register('gender')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Select
+              {...field}
+              isRequired
+              className="max-w-md"
+              label="Gender"
+              id='gender'
+              placeholder='Select a gender'
+              labelPlacement="outside"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
+              aria-label='Select gender'>
+              <SelectItem key={'male'}>{'Male'}</SelectItem>
+              <SelectItem key={'female'}>{'Female'}</SelectItem>
+            </Select>
+
+          )}
+        />
 
 
         <div className="flex gap-2">
