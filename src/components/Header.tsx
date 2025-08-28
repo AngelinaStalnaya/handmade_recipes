@@ -37,7 +37,8 @@ export default function Header() {
   useEffect(() => { }, [logged])
 
   return (
-    <Navbar isBordered isBlurred style={{ height: layoutConfig.headerHeight }}>
+    <header >
+    <Navbar isBordered isBlurred className='bg-linear-to-br from-success/15 to-secondary/15' style={{ height: layoutConfig.headerHeight }}>
       <NavbarBrand>
         <p color='secondary'>{siteConfig.title}
         </p>
@@ -88,10 +89,9 @@ export default function Header() {
           </>
         }
 
-
-
       </NavbarContent>
     </Navbar >
+    </header>
   );
 }
 

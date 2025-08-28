@@ -15,20 +15,22 @@ export default function RegistrationFormComp() {
   } = useForm({
     resolver: zodResolver(regSchema),
     defaultValues: {
-      'username': 'uij',
+      'firstName': 'Li',
+      'lastName': 'Sta',
       'password': '12345678A~',
       'confirmPassword': '12345678A~',
-      'email': 'abc@abc.com'
+      'email': 'abc@abc.com',
     }
   })
 
   const methods = useForm()
 
   const zeroState = {
-    'username': '',
+    'firstName': '',
+    'lastName': '',
     'password': '',
     'confirmPassword': '',
-    'email': ''
+    'email': '',
   }
 
   const onSubmit: SubmitHandler<RegSchemaType> = async (data, event) => {
@@ -54,16 +56,16 @@ export default function RegistrationFormComp() {
       >
         {/* TODO: refactor duplication of Controller */}
         <Controller
-          {...register('username')}
+          {...register('firstName')}
           control={control}
           render={({ field, fieldState }) => (
             <Input
               {...field}
               isRequired
-              id='username'
-              label="Username"
+              id='firstname'
+              label="First name"
               labelPlacement="outside"
-              placeholder="Enter your username"
+              placeholder="Enter your first name"
               type="text"
               errorMessage={fieldState.error?.message}
               isInvalid={fieldState.invalid}
@@ -76,6 +78,30 @@ export default function RegistrationFormComp() {
             />
           )}
         />
+<Controller
+          {...register('lastName')}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              isRequired
+              id='lastName'
+              label="Last name"
+              labelPlacement="outside"
+              placeholder="Enter your last name"
+              type="text"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              validationBehavior="aria"
+              color='secondary'
+              size='md'
+              radius='full'
+              variant='flat'
+
+            />
+          )}
+        />
+
         <Controller
           {...register('email')}
           control={control}
@@ -162,14 +188,13 @@ export default function RegistrationFormComp() {
               size='md'
               radius='full'
               variant='flat'
-              aria-label='Select gender'>
+              aria-label='Select gender'
+              aria-hidden={false}>
               <SelectItem key={'male'}>{'Male'}</SelectItem>
               <SelectItem key={'female'}>{'Female'}</SelectItem>
             </Select>
-
           )}
         />
-
 
         <div className="flex gap-2">
           <Button

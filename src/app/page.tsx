@@ -1,10 +1,5 @@
 'use client';
 
-// export const animals = [
-//   {key: "cat", label: "Cat"},
-//   {key: "dog", label: "Dog"},
-// ];
-
 export default function Home() {
   return (
     <section className='flex flex-col gap-3 '>
