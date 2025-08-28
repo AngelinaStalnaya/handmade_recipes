@@ -34,6 +34,7 @@ export default function LogInFormComp() {
             await new Promise((resolve) => setTimeout(resolve, 1000))
             const newData = JSON.stringify(data)
             console.log(`submit ${newData}, typeof ${typeof data}`);
+            // TODO: server action to /api/profile/login
         } catch (error) {
             console.log(error)
         }
