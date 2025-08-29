@@ -2,9 +2,9 @@
 
 import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Checkbox, Form, Input, Select, SelectItem } from "@heroui/react";
+import { Button, Checkbox, CheckboxGroup, Form, Input, Select, SelectItem, Textarea, cn } from "@heroui/react";
 import { dynamicMaterialSchema, DynamicMaterialSchemaType } from "@/validation/dynamicMaterial.schema";
-import { CurrencyUnits } from "@/config/units.config";
+import { CategoryUnits, CurrencyUnits, MeasurementUnits } from "@/config/units.config";
 
 export default function DynamicMaterialFormComp() {
     const {
@@ -12,7 +12,7 @@ export default function DynamicMaterialFormComp() {
         control,
         register,
         reset,
-        formState: { isSubmitting }
+        formState: { isSubmitting, errors }
     } = useForm({
         resolver: zodResolver(dynamicMaterialSchema),
         defaultValues: {
@@ -26,11 +26,12 @@ export default function DynamicMaterialFormComp() {
         'materialName': ''
     }
 
-    const amountChecked = useWatch({ control, name: 'amountCheckedSchema.amountChecked' })
-
+    const amountChecked = useWatch({ control, name: 'amountCheckedSchema.amountChecked' });
+    const priceChecked = useWatch({ control, name: 'priceCheckedSchema.priceChecked' });
 
     const onSubmit: SubmitHandler<DynamicMaterialSchemaType> = async (data, event) => {
         event?.preventDefault();
+        console.log(errors)
 
         try {
             await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -49,7 +50,7 @@ export default function DynamicMaterialFormComp() {
                 onSubmit={handleSubmit(onSubmit)}
                 onReset={() => reset(zeroState)}
             >
-                {/* TODO: refactor duplicate Controller and Inputs components */}
+                {/* TODO: refactor duplicate Controllers / Inputs / Checkboxes etc. components */}
                 <Controller
                     {...register('materialName')}
                     control={control}
@@ -73,12 +74,94 @@ export default function DynamicMaterialFormComp() {
                         />
                     )}
                 />
+                <Controller
+                    {...register('description')}
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <Textarea
+                            {...field}
+                            id='description'
+                            label="Description"
+                            maxRows={3}
+                            labelPlacement="outside"
+                            placeholder="Enter description"
+                            errorMessage={fieldState.error?.message}
+                            isInvalid={fieldState.invalid}
+                            validationBehavior="aria"
+                            color='secondary'
+                            size='md'
+                            radius='full'
+                            variant='flat'
+                        />
+                    )}
+                />
+
+                <Controller
+                    {...register('categories')}
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <CheckboxGroup
+                            {...field}
+                            id='categories'
+                            label="Tag/category"
+                            errorMessage={fieldState.error?.message}
+                            isInvalid={fieldState.invalid}
+                            validationBehavior="aria"
+                            color='secondary'
+                            size='sm'
+                            radius='full'
+                            className='min-w-[120px] flex flex-wrap text-sm font-success'
+                            orientation='horizontal'
+                        >
+                            {CategoryUnits.map(((item) =>
+                                <Checkbox
+                                    key={item.key}
+                                    id={item.key}
+                                    value={item.key}
+                                    aria-label={item.label}
+                                    classNames={{
+                                        base: cn(
+                                            "inline-flex bg-success/15 m-0",
+                                            "hover:bg-content2 items-center justify-start",
+                                            "cursor-pointer rounded-full gap-1 p-1 border-2 border-transparent",
+                                            "data-[selected=true]:border-success",
+                                        ),
+                                    }}
+                                >
+                                    {item.label}
+                                </Checkbox>))}
+                        </CheckboxGroup>
+                    )}
+                />
+
+                 <Controller
+                    {...register('additionallnfo')}
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <Textarea
+                            {...field}
+                            id='additionalInfo'
+                            label="Additional info"
+                            maxRows={3}
+                            labelPlacement="outside"
+                            placeholder="Enter additional info"
+                            errorMessage={fieldState.error?.message}
+                            isInvalid={fieldState.invalid}
+                            validationBehavior="aria"
+                            color='secondary'
+                            size='md'
+                            radius='full'
+                            variant='flat'
+                        />
+                    )}
+                />
+
 
                 <Checkbox
                     id='amountChecked'
                     {...register('amountCheckedSchema.amountChecked')}
                     color='secondary'
-                    size='md'
+                    size='sm'
                     radius='full'>
                     Add amout
                 </Checkbox>
@@ -124,12 +207,73 @@ export default function DynamicMaterialFormComp() {
                                 variant='flat'
                                 className='min-w-[120px]'
                             >
+                                {MeasurementUnits.map(((item) => <SelectItem key={item.key} id={item.key}>{item.label}</SelectItem>))}
+                            </Select>
+                        )}
+                    />
+                </div>
+                }
+
+                <Checkbox
+                    id='priceChecked'
+                    {...register('priceCheckedSchema.priceChecked')}
+                    color='secondary'
+                    size='sm'
+                    radius='full'>
+                    Add price
+                </Checkbox>
+                {priceChecked && <div className="flex gap-2">
+                    <Controller
+                        {...register('priceCheckedSchema.price')}
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <Input
+                                {...field}
+                                id='priceCheckedSchema.price'
+                                label="Price"
+                                labelPlacement="outside"
+                                placeholder="Enter your price"
+                                type="text"
+                                errorMessage={fieldState.error?.message}
+                                isInvalid={fieldState.invalid}
+                                validationBehavior="aria"
+                                color='secondary'
+                                size='md'
+                                radius='full'
+                                variant='flat'
+                                className='min-w-[170px]'
+                            />
+                        )}
+                    />
+                    <Controller
+                        {...register('priceCheckedSchema.unit')}
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <Select
+                                {...field}
+                                id='priceCheckedSchema.unit'
+                                label="Unit"
+                                labelPlacement="outside"
+                                placeholder="Choose unit"
+                                errorMessage={fieldState.error?.message}
+                                isInvalid={fieldState.invalid}
+                                validationBehavior="aria"
+                                color='secondary'
+                                size='md'
+                                radius='full'
+                                variant='flat'
+                                className='min-w-[120px]'
+                            >
                                 {CurrencyUnits.map(((item) => <SelectItem key={item.key} id={item.key}>{item.label}</SelectItem>))}
                             </Select>
                         )}
                     />
                 </div>
                 }
+
+
+
+
 
 
                 <div className="flex gap-2">
