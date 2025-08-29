@@ -1,6 +1,7 @@
 'use client';
 
-import AlertComp from "@/components/UI/Alert";
+import DynamicMaterialFormComp from "@/components/forms/DynamicMaterialForm";
+
 
 
 export default function Home() {
@@ -8,10 +9,7 @@ export default function Home() {
     <section className='flex flex-col gap-3 '>
       Home page
       <div className='flex gap-3'>
-        <AlertComp 
-        title='alert' 
-        description='blabla rtgrtherlvwelkvm lwk kwemv lmv;rnvwelkfcmsdvkmew' 
-         />
+        <DynamicMaterialFormComp/>
       </div>
     </section>
   )

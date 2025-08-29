@@ -7,7 +7,8 @@ type SelectCompProps = {
     items: Array<{key: string, label: string}>
     label?: string, 
     placeholder?: string, 
-    isRequired?: boolean, 
+    isRequired?: boolean,
+    rest?: [] 
 }
 
 export default function SelectComp({items, label, placeholder, isRequired} : SelectCompProps) {
