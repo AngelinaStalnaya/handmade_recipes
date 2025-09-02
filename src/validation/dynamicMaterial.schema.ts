@@ -29,7 +29,7 @@ const dynamicMaterialSchema = z.object({
   description: z.string().optional(),
   categories: z.array(z.string()).max(5).optional(),
   additionallnfo: z.string().optional(),
-  updatedAt: z.date().optional(),
+  updatedAt: z.iso.date().optional(),
   photos: z.array(z.file().max(5_000_000).mime(['image/png', 'image/jpeg'])).max(3).optional(),
 })
 .extend({amountCheckedSchema, priceCheckedSchema});

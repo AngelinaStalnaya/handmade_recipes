@@ -9,7 +9,7 @@ declare module "@react-types/shared" {
   }
 }
 
-export function Providers({children}: { children: React.ReactNode }) {
+export function HeroProvider({children}: { children: React.ReactNode }) {
   const router = useRouter();
   
   return (

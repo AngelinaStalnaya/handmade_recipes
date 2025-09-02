@@ -10,11 +10,12 @@ import RegistrationFormComp from "./forms/RegistrationForm";
 import LogInFormComp from "./forms/LogInForm";
 import UserComp from "./UI/User";
 import ButtonComp from "./UI/Button";
-import { useState, useEffect } from "react";
+import {useEffect } from "react";
+import { useUserStore } from "@/providers/UserStoreProvider";
 
 export default function Header() {
   const pathname = usePathname();
-  const [logged, setLogged] = useState<boolean>(true);
+  const {firstName, id, gender, description, photo, clearUser} = useUserStore((state) => state)
 
   const getNavItems = () => {
     return siteConfig.navItems.map((item) => {
@@ -34,7 +35,7 @@ export default function Header() {
     })
   }
 
-  useEffect(() => { }, [logged])
+  useEffect(() => { }, [id])
 
   return (
     <header >
@@ -49,21 +50,24 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        {logged
+        {id
           ?
           <>
             <NavbarItem>
               <ButtonComp
                 variant="bordered"
                 color='secondary'
-                onPress={() => {setLogged(false); console.log('log out clicked')}}
+                onPress={() => {
+                  console.log('log out clicked');
+                  clearUser();
+                }}
               >
                 Log out
               </ButtonComp>
             </NavbarItem>
             <NavbarItem>
               <ButtonComp variant="light" className='flex p-0 m-0 pr-2' onPress={() => console.log('profile clicked')}>
-                <UserComp name='Angelina' description='Handmade master' gender='female' />
+                <UserComp name={firstName} description={description || 'Handmade master'} gender={gender || 'female'} avatarSrc={photo && `${photo[0]}`}/>
               </ButtonComp>
             </NavbarItem>
           </>

@@ -6,7 +6,7 @@ const LoadingPage = () => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <CircularProgress aria-label="Loading..." color="secondary" />
+      <CircularProgress aria-label="Loading..." color="secondary" size='lg'/>
       <div className='text-3xl font-bold text-secondary'>Loading...</div>
     </div>
   )

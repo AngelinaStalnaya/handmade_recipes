@@ -46,7 +46,7 @@ export default function DynamicMaterialFormComp() {
     return (
         <FormProvider {...methods}>
             <Form method='post'
-                className="w-full min-w-[350px] flex flex-col gap-4 border-1 border-success/50 rounded-2xl p-3"
+                className="w-full min-w-[350px] flex flex-col gap-4 border-2 border-success/50 rounded-2xl p-3"
                 onSubmit={handleSubmit(onSubmit)}
                 onReset={() => reset(zeroState)}
             >
